@@ -1,168 +1,204 @@
-﻿Bookery psu = new();
-ShowCounters show = new(Book.PrintBookCount);
-show += Bookery.PrintBookCount;
+﻿//Bookery psu = new();
 int i;
 do
 {
-    GC.Collect();
-    Console.WriteLine($" Choose option \n 1. Add book \n 2. Add 2 Defaults \n 3. Redact book info \n 4. Delete book \n 5. Show all books \n 6. Compare books \n 7. Exit ");
+    Console.WriteLine($" Choose type \n 1. Integer \n 2. Char \n 3. Book \n 4. Main Book \n 5. Read Book \n 6. Exit");
     i = Convert.ToInt32(Console.ReadLine());
+    var rand = new Random();
     switch (i)
     {
         case 1:
             {
-                int i1;
-                do
+                Console.WriteLine($" Choose Array Size: ");
+                BookeryGeneric<int> psu = new(Convert.ToInt32(Console.ReadLine()));
+                for (int j = 0; j < psu.maxsize; j++)
                 {
-                    Console.WriteLine($" 1. Add book \n 2. Add Read Book \n 3. Add Main Book \n 4. Exit ");
-                    i1 = Convert.ToInt32(Console.ReadLine());
-                    switch (i1)
-                    {
-                        case 1:
-                            {
-                                Book b1 = new();
-                                psu+=b1;
-                            }
-                            break;
-                        case 2:
-                            {
-                                ReadBook b1 = new();
-                                psu += b1;
-                            }
-                            break;
-                        case 3:
-                            {
-                                MainBook b1 = new();
-                                psu += b1;
-                            }
-                            break;
-                    }
+                    psu.AddBook(j + rand.Next(42));
+                    Console.Write($"{j}.{psu.GetItem(j)}");
                 }
-                while (i1 != 4);
+                Console.WriteLine($"Max = {psu.Max()}");
+                Console.WriteLine($"Min = {psu.Min()}");
+                psu.Sort();
+                Console.WriteLine($"Sorted:");
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    Console.Write($"{j}.{psu.GetItem(j)}");
+                }
+                Console.WriteLine($" Choose Item to get index from: ");
+                int iFind = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Index of item (non-existent if -1): {psu.FindItem(iFind)}");
             }
             break;
         case 2:
             {
-                psu++;
-                ++psu;
+                Console.WriteLine($" Choose Array Size: ");
+                BookeryGeneric<Char> psu = new(Convert.ToInt32(Console.ReadLine()));
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    psu.AddBook(Convert.ToChar(j + rand.Next(42)));
+                    Console.Write($"{j}.{psu.GetItem(j)}");
+                }
+                Console.WriteLine($"Max = {psu.Max()}");
+                Console.WriteLine($"Min = {psu.Min()}");
+                psu.Sort();
+                Console.WriteLine($"Sorted:");
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    Console.Write($"{j}.{psu.GetItem(j)}");
+                }
+                Console.WriteLine($" Choose Item to get index from: ");
+                int iFind = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Index of item (non-existent if -1): {psu.FindItem(Convert.ToChar(iFind))}");
             }
             break;
         case 3:
             {
-                psu.RedactBook();
+                Console.WriteLine($" Choose Array Size: ");
+                BookeryGeneric<Book> psu = new(Convert.ToInt32(Console.ReadLine()));
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    psu.AddBook(new(){ Id = j + rand.Next(42)});
+                    Console.Write($"{j}.");
+                    psu.GetItem(j).Print();
+                    Console.WriteLine();
+                }
+                Console.WriteLine($"Max = {psu.Max()}");
+                Console.WriteLine($"Min = {psu.Min()}");
+                psu.Sort();
+                Console.WriteLine($"Sorted:");
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    Console.Write($"{j}.");
+                    psu.GetItem(j).Print();
+                    Console.WriteLine();
+                }
+                Console.WriteLine($" Choose Item to get index from (search by Id): ");
+                int iFind = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Index of item (non-existent if -1): {psu.FindItem(new() { Id = iFind })}");
             }
             break;
         case 4:
             {
-                psu.DeleteBook();
+                Console.WriteLine($" Choose Array Size: ");
+                BookeryGeneric< MainBook > psu = new(Convert.ToInt32(Console.ReadLine()));
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    psu.AddBook(new() { Age = j+rand.Next(42)});
+                }
+                Console.WriteLine($"Max = {psu.Max()}");
+                Console.WriteLine($"Min = {psu.Min()}");
+                psu.Sort();
+                Console.WriteLine($"Sorted:");
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    Console.Write($"{j}.");
+                    psu.GetItem(j).Print();
+                    Console.WriteLine();
+                }
+                Console.WriteLine($" Choose Item to get index from: ");
+                int iFind = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Index of item (non-existent if -1): {psu.FindItem(new() { Age = iFind })}");
             }
             break;
         case 5:
             {
-                psu <<= 1945;
-            }
-            break;
-        case 6:
-            {
-                int b1;
-                int b2;
-                Console.WriteLine($" Enter first book number");
-                b1 = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine($" Enter second book number");
-                b2 = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine($" Book1 < Book2 = {b1 < b2}");
-                Console.WriteLine($" Book1 > Book2 = {b1 > b2}");
-                Console.WriteLine($" Book1 == Book2 = {b1 == b2}");
-                Console.WriteLine($" Book1 != Book2 = {b1 != b2}");
+                Console.WriteLine($" Choose Array Size: ");
+                BookeryGeneric<ReadBook> psu = new(Convert.ToInt32(Console.ReadLine()));
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    psu.AddBook(new() { Stand = j + rand.Next(42) });
+                }
+                Console.WriteLine($"Max = {psu.Max()}");
+                Console.WriteLine($"Min = {psu.Min()}");
+                psu.Sort();
+                Console.WriteLine($"Sorted:");
+                for (int j = 0; j < psu.maxsize; j++)
+                {
+                    Console.Write($"{j}.");
+                    psu.GetItem(j).Print();
+                    Console.WriteLine();
+                }
+                Console.WriteLine($" Choose Item to get index from: ");
+                int iFind = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Index of item (non-existent if -1): {psu.FindItem(new() { Stand = iFind })}");
             }
             break;
         default: break;
     }
-}
-while (i != 7);
-class Bookery
+} while (i != 6);
+class BookeryGeneric <T> where T : IComparable<T>
 {
-    private static int _bookeryBookCount;
-    private List<Book> books = new(2048);
-    private List<MainBook> booksInherit = new(2048);
 
-    public Book this[int i]
+    private List<T> books;
+    public int maxsize=0; 
+    private int count=0;
+
+    public BookeryGeneric (int n)
     {
-        get { return books[i]; }
-        set { books[i] = value; }
+        books = new();
+        maxsize = n;
     }
 
-    public void AddBook(Book b)
+    public void AddBook (T book)
     {
-        Console.WriteLine(" Choose List to add: \n 1. Books list \n 2. Main books List");
-        int i = Convert.ToInt32(Console.ReadLine());
-        if (i == 1) { books.Add(b); _bookeryBookCount++; } else { booksInherit.Add((MainBook)b); }
-    }
-    public void PrintBooks()
-    {
-        int i;
-        Console.WriteLine(" Choose List to show: \n 1. Books list \n 2. Main books List");
-        i = Convert.ToInt32(Console.ReadLine());
-        if (i == 1)
+        if (count < maxsize)
         {
-            i = 0;
-            foreach (Book b in books)
+            books[count]=book;
+            count++;
+        }
+    }
+    public T GetItem (int i)
+    {
+        return books[i];
+    }
+
+    public int FindItem(T obj) 
+    {
+        int index = -1;
+        for (int i = 0; i < count; i++)
+        {
+            if (books[i].CompareTo(obj) == 0)
             {
-                Console.Write($"{i + 1}. ");
-                this[i].Print();
-                Console.Write("\n");
-                i++;
+                index = i;
+                break;
             }
         }
-        else
+        return index;
+    }
+
+    public T Min()
+    {
+        T minValue = books[0];
+        foreach(T item in books)
         {
-            i = 0;
-            foreach (MainBook b in booksInherit)
+            if (item.CompareTo(minValue)<0)
             {
-                Console.Write($"{i + 1}. ");
-                booksInherit[i].Print();
-                Console.Write("\n");
-                i++;
+                minValue = item;
             }
         }
+        return minValue;
+    }
+    public T Max()
+    {
+        T maxValue = books[0];
+        foreach (T item in books)
+        {
+            if (item.CompareTo(maxValue) > 0)
+            {
+                maxValue = item;
+            }
+        }
+        return maxValue;
+    }
 
-    }
-    public void DeleteBook()
+    public void Sort()
     {
-        Console.WriteLine(" Choose book number to delete:");
-        int i = Convert.ToInt32(Console.ReadLine());
-        this[i - 1].Dispose();
-        books.RemoveAt(i - 1);
-        _bookeryBookCount--;
-        GC.Collect();
+        books.Sort();
     }
-    public void RedactBook()
-    {
-        Console.WriteLine(" Choose book number to redact:");
-        int i = Convert.ToInt32(Console.ReadLine());
-        this[i - 1].Redact();
-    }
-    public static void PrintBookCount()
-    {
-        Console.WriteLine($"Bookery static Book counter: {_bookeryBookCount}");
-    }
-    public static Bookery operator +(Bookery bookery, Book b)
-    {
-        bookery.AddBook(b);
-        return bookery;
-    }
-    public static Bookery operator ++(Bookery bookery)
-    {
-        bookery.AddBook(bookery[0]);
-        return bookery;
-    }
-    public static Bookery operator << (Bookery bookery, int d)
-    {
-        bookery.PrintBooks();
-        return null;
-    }
+
 }
-class Book : IDisposable
+
+class Book : IComparable<Book>
 {
     private static int _bookCount;
     private string? _name;
@@ -225,13 +261,8 @@ class Book : IDisposable
         Name = b.Name;
         Id = b.Id;
         Person = b.Person;
-        b.Dispose();
         GC.Collect();
         Console.WriteLine("Book Moving Constructor");
-    }
-    ~Book()
-    {
-        Console.WriteLine("Book Destructor");
     }
 
     public virtual void Print()
@@ -270,17 +301,24 @@ class Book : IDisposable
         }
         while (i != 4);
     }
-    public void Dispose()
+
+    public int CompareTo(Book other)
     {
-        _bookCount--;
-        Console.WriteLine("Book Disposer");
-    }
-    public static void PrintBookCount()
-    {
-        Console.WriteLine($"Static Book counter: {_bookCount}");
+        if  (this.Id < other.Id)
+        {
+            return -1;
+        }
+        else
+        {
+            if (Id > other.Id)
+            {
+                return 1;
+            }
+            else return 0;
+        }
     }
 }
-class MainBook : Book
+class MainBook : Book, IComparable<MainBook>
 {
     private int _age;
     public int Age { get => _age; set => _age = value; }
@@ -289,15 +327,6 @@ class MainBook : Book
         Console.WriteLine(" Enter book Age (type 0 to skip): ");
         Age = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("MainBook Constructor v2");
-    }
-    ~MainBook()
-    {
-        Console.WriteLine("MainBook Destructor");
-    }
-
-    public new void Dispose()
-    {
-        Console.WriteLine("MainBook Disposer");
     }
     public override void Print()
     {
@@ -320,8 +349,23 @@ class MainBook : Book
     {
         return !(b1.Age == b2.Age);
     }
+    public int CompareTo(MainBook other)
+    {
+        if (Age < other.Age)
+        {
+            return -1;
+        }
+        else
+        {
+            if (Age > other.Age)
+            {
+                return 1;
+            }
+            else return 0;
+        }
+    }
 }
-class ReadBook : Book
+class ReadBook : Book, IComparable<ReadBook>
 {
     private int _stand;
     public int Stand { get => _stand; set => _stand = value; }
@@ -335,10 +379,6 @@ class ReadBook : Book
     ~ReadBook()
     {
         Console.WriteLine("ReadBook Destructor");
-    }
-    public new void Dispose()
-    {
-        Console.WriteLine("ReadBook Disposer");
     }
     public override void Print()
     {
@@ -362,6 +402,19 @@ class ReadBook : Book
     {
         return !(b1.Stand == b2.Stand);
     }
+    public int CompareTo(ReadBook other)
+    {
+        if (Stand < other.Stand)
+        {
+            return -1;
+        }
+        else
+        {
+            if (Stand > other.Stand)
+            {
+                return 1;
+            }
+            else return 0;
+        }
+    }
 }
-
-delegate void ShowCounters();
